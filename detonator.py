@@ -70,7 +70,6 @@ async def setRoles():
                 rank = 'Detonator'
             role = discord.utils.get(guild.roles, name=rank)
             if role not in member.roles:
-                print(member + 'ranked up to' + rank)
                 await delete_role(member, rank, guild)
                 await member.add_roles(role)
                 await bot_channel.send('<@' + str(member.id) + '>', embed=discord.Embed(title=':bomb: C4 Exploded!', description='Your rank has been changed to **' + rank + '** because of the total of Guild Experience you earned this week. \n **Total Weekly GEXP**: ' + format(weeklyEXP,
