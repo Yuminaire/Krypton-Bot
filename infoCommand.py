@@ -1,7 +1,7 @@
 import discord
 import requests
 from tinydb import TinyDB, Query
-apiKey = 'HYPIXEL_API_KEY'
+apiKey = 'API_KEY'
 dataDB = TinyDB('dataDB.json')
 
 
@@ -40,7 +40,7 @@ def getGuildInfo():
 
 def getGuildInfoMessage():
     guildInfo = getGuildInfo()
-    guildInfoMessage = discord.Embed(title='[' + guildInfo[1] + '] ' + guildInfo[0], url='https://plancke.io/hypixel/player/stats/', description=str(guildInfo[3]) + '/125 members',
+    guildInfoMessage = discord.Embed(title='[' + guildInfo[1] + '] ' + guildInfo[0], url='https://plancke.io/hypixel/guild/name/krypton', description=str(guildInfo[3]) + '/125 members',
                                      color=16755200)
     guildInfoMessage.set_author(name='Guild Info')
     guildInfoMessage.add_field(name='Level', value=str(guildInfo[2]), inline=True)
@@ -48,6 +48,7 @@ def getGuildInfoMessage():
     guildInfoMessage.add_field(name='Created on', value='24/06/2020', inline=True)
     guildInfoMessage.add_field(name='Daily Guild Experience', value='Total: ' + format(guildInfo[4], ',d') + ' exp', inline=False)
     guildInfoMessage.add_field(name='Weekly Guild Experience', value= 'Total: ' + format(guildInfo[5], ',d') + ' exp', inline=False)
+    guildInfoMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     return guildInfoMessage
 
 

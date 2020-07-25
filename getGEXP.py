@@ -4,7 +4,7 @@ import datetime
 from datetime import date
 from tinydb import TinyDB, Query
 
-apiKey = 'HYPIXEL_API_KEY'
+apiKey = 'API_KEY'
 dataDB = TinyDB('dataDB.json')
 
 
@@ -36,7 +36,7 @@ def getPlayerGEXP(uuid):
 def getPlayerGEXPMessage(uuid):
     name = requests.get('https://api.hypixel.net/player?key=' + apiKey + '&uuid=' + uuid).json()["player"]["displayname"]
     playerGEXP = getPlayerGEXP(uuid)
-    playerGEXPMessage = discord.Embed(title='[' + playerGEXP[4] + '] ' + name, url='https://plancke.io/hypixel/guild/name/detonator', description=playerGEXP[3],
+    playerGEXPMessage = discord.Embed(title='[' + playerGEXP[4] + '] ' + name, url='https://plancke.io/hypixel/guild/name/krypton', description=playerGEXP[3],
                                       color=16755200)
     playerGEXPMessage.set_author(name='Guild Experience')
     playerGEXPMessage.set_thumbnail(url='https://www.mc-heads.net/player/' + uuid)
@@ -48,7 +48,7 @@ def getPlayerGEXPMessage(uuid):
                                                                   + datetime.datetime.strptime(playerGEXP[2][4], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][4], ',d') + ' exp\n'
                                                                   + datetime.datetime.strptime(playerGEXP[2][5], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][5], ',d') + ' exp\n'
                                                                   + datetime.datetime.strptime(playerGEXP[2][6], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][6], ',d') + ' exp\n', inline=True)
-    playerGEXPMessage.set_footer(text='Detonator Bot made by Yuushi#5964')
+    playerGEXPMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     return playerGEXPMessage
 
 
@@ -72,12 +72,12 @@ def getWeeklyGEXPTop():
 
 def getWeeklyGEXPTopMessage():
     messageContent = getWeeklyGEXPTop()
-    weeklyGEXPTopMessage = discord.Embed(title='Detonator\'s Leaderboard', url='https://plancke.io/hypixel/guild/name/detonator',
+    weeklyGEXPTopMessage = discord.Embed(title='Krypton\'s Leaderboard', url='https://plancke.io/hypixel/guild/name/krypton',
                                          color=16755200)
     weeklyGEXPTopMessage.add_field(name='Position #1 to #' + str(round(len(messageContent[2]) / 2)), value=messageContent[0], inline=True)
     weeklyGEXPTopMessage.add_field(name='Position #' + str(round(len(messageContent[2]) / 2) + 1) + ' to #' + str(len(messageContent[2])), value=messageContent[1], inline=True)
     weeklyGEXPTopMessage.set_author(name='Weekly Guild Experience')
-    weeklyGEXPTopMessage.set_footer(text='Detonator Bot made by Yuushi#5964')
+    weeklyGEXPTopMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     return weeklyGEXPTopMessage
 
 
@@ -101,10 +101,10 @@ def getDailyGEXPTop():
 
 def getDailyGEXPTopMessage():
     messageContent = getDailyGEXPTop()
-    dailyGEXPTopMessage = discord.Embed(title='Detonator\'s Leaderboard', url='https://plancke.io/hypixel/guild/name/detonator',
+    dailyGEXPTopMessage = discord.Embed(title='Krypton\'s Leaderboard', url='https://plancke.io/hypixel/guild/name/krypton',
                                         color=16755200)
     dailyGEXPTopMessage.add_field(name='Position #1 to #' + str(round(len(messageContent[2]) / 2)), value=messageContent[0], inline=True)
     dailyGEXPTopMessage.add_field(name='Position #' + str(round(len(messageContent[2]) / 2) + 1) + ' to #' + str(len(messageContent[2])), value=messageContent[1], inline=True)
     dailyGEXPTopMessage.set_author(name='Daily Guild Experience')
-    dailyGEXPTopMessage.set_footer(text='Detonator Bot made by Yuushi#5964')
+    dailyGEXPTopMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     return dailyGEXPTopMessage

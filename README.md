@@ -1,2 +1,2 @@
-# Detonator-Bot
-A Discord bot for the Detonator Hypixel Guild.
+# Krypton Bot
+A Discord bot for the Krypton Hypixel Guild.
