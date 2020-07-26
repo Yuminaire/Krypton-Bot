@@ -110,7 +110,9 @@ def clearDB():
 async def help(ctx):
     helpMessage = discord.Embed(title='Help Menu', description='`' + cmdPrefix + 'help` + bring up this help menu \n `' + cmdPrefix + 'link <ign>` + link your Discord ID to your Minecraft name (not case sensitive) \n '
                                                                '`' + cmdPrefix + 'exp <ign>` + get a member\'s GEXP \n `' + cmdPrefix + 'daily` + get the daily GEXP leaderboard \n '
-                                                               '`' + cmdPrefix + 'weekly` + get the weekly GEXP leaderboard')
+                                                               '`' + cmdPrefix + 'weekly` + get the weekly GEXP leaderboard\n '
+                                                               '`' + cmdPrefix + 'info` + display the guild info'
+)
     helpMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     await ctx.send(embed=helpMessage)
 
