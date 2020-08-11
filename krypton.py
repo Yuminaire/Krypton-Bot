@@ -21,7 +21,6 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="your GEXP | $help"))
     getEXP.start()
     setRoles.start()
-    remindLink.start()
     print('Krypton Bot is ready.')
 
 
@@ -44,14 +43,14 @@ async def getEXP():
             await member.remove_roles(unlinkRole)
 
 
-@tasks.loop(hours=1)
-async def remindLink():
-    guild = bot.get_guild(714335785469345793)
-    unlinkRole = discord.utils.get(guild.roles, name='Unlinked')
-    unlink_channel = bot.get_channel(728366357455962153)
-    await unlink_channel.send(content='<@&' + str(unlinkRole.id) + '>')
-    await unlink_channel.send(embed=discord.Embed(title='Link your Account', description='Please make sure to link your Minecraft username with your Discord account so that your guild role can be updated automatically. You can do so by going into the <#714643693738655804> channel and typing `$link <ign>`.',
-                                                  color=11141120).set_footer(text='Krypton Bot made by Yuushi#5964'))
+# @tasks.loop(hours=1)
+# async def remindLink():
+#    guild = bot.get_guild(714335785469345793)
+#    unlinkRole = discord.utils.get(guild.roles, name='Unlinked')
+#    unlink_channel = bot.get_channel(728366357455962153)
+#    await unlink_channel.send(content='<@&' + str(unlinkRole.id) + '>')
+#    await unlink_channel.send(embed=discord.Embed(title='Link your Account', description='Please make sure to link your Minecraft username with your Discord account so that your guild role can be updated automatically. You can do so by going into the <#714643693738655804> channel and typing `$link <ign>`.',
+#                                                  color=11141120).set_footer(text='Krypton Bot made by Yuushi#5964'))
 
 
 @tasks.loop(minutes=15)
@@ -73,8 +72,8 @@ async def setRoles():
                 await delete_role(member, rank, guild)
                 await member.add_roles(role)
                 await bot_channel.send('<@' + str(member.id) + '>', embed=discord.Embed(title=':diamond_shape_with_a_dot_inside: You\'re shining!', description='Your rank has been changed to **' + rank + '** because of the total of Guild Experience you earned this week. \n **Total Weekly GEXP**: ' + format(weeklyEXP,
-                                                                                                                                                                                                                 ',d') + ' exp',
-                                                           color=43520).set_footer(text='Krypton Bot made by Yuushi#5964'))
+                                                                                                                                                                                                                                                                                                                    ',d') + ' exp',
+                                                                                        color=43520).set_footer(text='Krypton Bot made by Yuushi#5964'))
 
 
 async def delete_role(member, rank, guild):
@@ -95,8 +94,10 @@ def getName(ctx):
     else:
         return None
 
+
 def clearDB():
-    guildData = requests.get('https://api.hypixel.net/guild?key=' + apiKey + '&id=5ef336138ea8c950b6cb73f2').json()
+    guildData = requests.get('https://api.hypixel.net/guild?key=' +
+                             apiKey + '&id=5ef336138ea8c950b6cb73f2').json()
     apiUUID = []
     for i in range(len(guildData["guild"]["members"])):
         apiUUID.append(guildData["guild"]["members"][i]["uuid"])
@@ -109,7 +110,8 @@ def clearDB():
 @bot.command()
 async def help(ctx):
     helpMessage = discord.Embed(title='Help Menu', description='`' + cmdPrefix + 'help` + bring up this help menu \n `' + cmdPrefix + 'link <ign>` + link your Discord ID to your Minecraft name (not case sensitive) \n '
-                                                               '`' + cmdPrefix + 'info` + get Krypton\'s guild info \n `' + cmdPrefix + 'exp <ign>` + get a member\'s GEXP \n '
+                                                               '`' + cmdPrefix + 'info` + get Krypton\'s guild info \n `' +
+                                cmdPrefix + 'exp <ign>` + get a member\'s GEXP \n '
                                                                '`' + cmdPrefix + 'daily` + get the daily GEXP leaderboard \n `' + cmdPrefix + 'weekly` + get the weekly GEXP leaderboard')
     helpMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
     await ctx.send(embed=helpMessage)
@@ -123,7 +125,8 @@ async def link(ctx, name=None):
     else:
         userID = ctx.message.author.id
         uuid = requests.get('https://api.mojang.com/users/profiles/minecraft/' + name).json()["id"]
-        guildData = requests.get('https://api.hypixel.net/guild?key=' + apiKey + '&id=5ef336138ea8c950b6cb73f2').json()
+        guildData = requests.get('https://api.hypixel.net/guild?key=' +
+                                 apiKey + '&id=5ef336138ea8c950b6cb73f2').json()
         uuidList = []
         for i in range(len(guildData["guild"]["members"])):
             uuidList.append(guildData["guild"]["members"][i]["uuid"])
@@ -158,7 +161,8 @@ async def link(ctx, name=None):
 async def exp(ctx, name=None):
     if name is None:
         uuid = getName(ctx)
-        name = requests.get('https://api.hypixel.net/player?key=' + apiKey + '&uuid=' + uuid).json()["player"]["displayname"]
+        name = requests.get('https://api.hypixel.net/player?key=' + apiKey +
+                            '&uuid=' + uuid).json()["player"]["displayname"]
         if name is None:
             await ctx.send(embed=noName)
     if name is not None:
@@ -174,8 +178,8 @@ async def daily(ctx):
 @bot.command()
 async def weekly(ctx):
     await ctx.send(embed=getWeeklyGEXPTopMessage())
-    
-    
+
+
 @bot.command()
 async def info(ctx):
     await ctx.send(embed=getGuildInfoMessage())
@@ -185,12 +189,21 @@ async def info(ctx):
 async def list(ctx):
     guild = bot.get_guild(714335785469345793)
     unlinkRole = discord.utils.get(guild.roles, name='Unlinked')
-    content = ''
+    content1 = ''
+    content2 = ''
+    unlinked_mem = []
     if (ctx.message.author.id == 272553041826414593) or (ctx.message.author.id == 193425484799803395):
         for member in guild.members:
             if unlinkRole in member.roles:
-                content = content + '`-` <@' + str(member.id) + '> \n'
-        await ctx.message.author.send(embed=discord.Embed(title='Unlinked Members').add_field(name='List of Unlinked members', value=content))
+                unlinked_mem.append(member.id)
+        for i in range(round(len(unlinked_mem) / 2)):
+            content1 = content1 + '`-` <@' + str(unlinked_mem[i]) + '> \n'
+        for i in range(round(len(unlinked_mem) / 2), len(unlinked_mem)):
+            content2 = content2 + '`-` <@' + str(unlinked_mem[i]) + '> \n'
+        unlist = discord.Embed(title='Unlinked Members')
+        unlist.add_field(name='List of Unlinked members', value=content1)
+        unlist.add_field(name='Total: ' + str(len(unlinked_mem)), value=content2)
+        await ctx.message.author.send(embed=unlist)
     else:
         await ctx.send(embed=discord.Embed(title='An error has occured', description='This command is reserved to the guild owner <@' + str(272553041826414593) + '> and to the developer of the bot <@' + str(193425484799803395) + '>.', color=11141120).set_footer(text='Krypton Bot made by Yuushi#5964'))
 

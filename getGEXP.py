@@ -9,16 +9,18 @@ dataDB = TinyDB('dataDB.json')
 
 
 def storeGEXP():
+    print('Retrieving GEXP data from Hypixel API', datetime.datetime.now())
     guildData = requests.get('https://api.hypixel.net/guild?key=' + apiKey + '&id=5ef336138ea8c950b6cb73f2').json()
     for i in range(len(guildData["guild"]["members"])):
-        uuid = guildData["guild"]["members"][i]["uuid"]
-        weeklyEXP = sum(list(guildData["guild"]["members"][i]["expHistory"].values()))
-        dailyEXP = list(guildData["guild"]["members"][i]["expHistory"].values())[0]
-        if dataDB.get(Query()['uuid'] == uuid):
-            dataDB.update({'weeklyEXP': weeklyEXP}, Query().uuid == uuid)
-            dataDB.update({'dailyEXP': dailyEXP}, Query().uuid == uuid)
-        else:
-            dataDB.insert({'uuid': uuid, 'weeklyEXP': weeklyEXP, 'dailyEXP': dailyEXP, 'userID': ''})
+        if len(list(guildData["guild"]["members"][i]["expHistory"].values())) == 7:
+          uuid = guildData["guild"]["members"][i]["uuid"]
+          weeklyEXP = sum(list(guildData["guild"]["members"][i]["expHistory"].values()))
+          dailyEXP = list(guildData["guild"]["members"][i]["expHistory"].values())[0]
+          if dataDB.get(Query()['uuid'] == uuid):
+              dataDB.update({'weeklyEXP': weeklyEXP}, Query().uuid == uuid)
+              dataDB.update({'dailyEXP': dailyEXP}, Query().uuid == uuid)
+          else:
+              dataDB.insert({'uuid': uuid, 'weeklyEXP': weeklyEXP, 'dailyEXP': dailyEXP, 'userID': ''})
 
 
 def getPlayerGEXP(uuid):
