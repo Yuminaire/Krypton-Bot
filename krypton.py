@@ -13,7 +13,7 @@ bot = commands.Bot(command_prefix=cmdPrefix)
 bot.remove_command('help')
 dataDB = TinyDB('dataDB.json')
 noName = discord.Embed(title='No Name Provided', description='Please provide a username after the command, or link your Discord user ID with your Minecraft name with the command **link**.', color=11141120
-                       ).set_footer(text='Krypton Bot made by Yuushi#5964')
+                       ).set_footer(text='Krypton Bot made by Yuushi#0001')
 
 
 @bot.event
