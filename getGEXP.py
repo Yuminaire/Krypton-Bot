@@ -50,7 +50,7 @@ def getPlayerGEXPMessage(uuid):
                                                                   + datetime.datetime.strptime(playerGEXP[2][4], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][4], ',d') + ' exp\n'
                                                                   + datetime.datetime.strptime(playerGEXP[2][5], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][5], ',d') + ' exp\n'
                                                                   + datetime.datetime.strptime(playerGEXP[2][6], '%Y-%m-%d').strftime('%d/%m/%Y') + ': ' + format(playerGEXP[1][6], ',d') + ' exp\n', inline=True)
-    playerGEXPMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
+    playerGEXPMessage.set_footer(text='Krypton Bot made by Yuushi#0001')
     return playerGEXPMessage
 
 
@@ -79,7 +79,7 @@ def getWeeklyGEXPTopMessage():
     weeklyGEXPTopMessage.add_field(name='Position #1 to #' + str(round(len(messageContent[2]) / 2)), value=messageContent[0], inline=True)
     weeklyGEXPTopMessage.add_field(name='Position #' + str(round(len(messageContent[2]) / 2) + 1) + ' to #' + str(len(messageContent[2])), value=messageContent[1], inline=True)
     weeklyGEXPTopMessage.set_author(name='Weekly Guild Experience')
-    weeklyGEXPTopMessage.set_footer(text='Krypton Bot made by Yuushi#5964')
+    weeklyGEXPTopMessage.set_footer(text='Krypton Bot made by Yuushi#0001')
     return weeklyGEXPTopMessage
 
 
